@@ -8,7 +8,7 @@ from openpyxl.utils import get_column_letter
 from zipfile import ZipFile
 
 zf = ZipFile('/opt/LEAP2.0 Project Files.rar', 'r')
-zf.extractall('/opt')
+zf.extractall('/opt/Data')
 zf.close()
 
 date = date.today()
