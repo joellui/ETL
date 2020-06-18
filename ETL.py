@@ -4,8 +4,12 @@ import xlsxwriter
 import numpy as np
 from datetime import date
 from time import process_time
-
 from openpyxl.utils import get_column_letter
+from zipfile import ZipFile
+
+zf = ZipFile('/opt/LEAP2.0 Project Files.rar', 'r')
+zf.extractall('/opt')
+zf.close()
 
 date = date.today()
 today = date.strftime("%Y%m%d")
