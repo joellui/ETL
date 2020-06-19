@@ -6,15 +6,16 @@ from datetime import date
 from time import process_time
 from openpyxl.utils import get_column_letter
 from zipfile import ZipFile
+import os, shutil
 
-zf = ZipFile('/opt/LEAP2.0 Project Files.rar', 'r')
-zf.extractall('/opt/Data')
+zf = ZipFile('/opt/Project Data.zip', 'r')
+zf.extractall('/opt/')
 zf.close()
 
 date = date.today()
 today = date.strftime("%Y%m%d")
 tod = date.strftime("%d/%m/%Y")
-loc = '/opt/dataout/'
+loc = '/home/dinudante/Documents/opt/dataout/'
 workbook = xlsxwriter.Workbook(loc+'model_' + today + '.xlsx')
 
 worksheet = workbook.add_worksheet()
@@ -36,7 +37,7 @@ worksheet.write('K1', 'Forecast w/o SA  Min')
 t1 = process_time()
 
 paths=[]
-filename = '/opt/Data/'
+filename = '/opt/Project Data/'
 arr = os.listdir(filename)
 for items in arr:
     if "~$" not in items:
@@ -45,7 +46,7 @@ for items in arr:
 fel=2
 for file in paths:
     ticker = file.split(' ')[0]
-    filename = r'/opt/Data/' + file
+    filename = r'/opt/Project Data/' + file
     wb = openpyxl.load_workbook(filename, read_only=True, data_only=True)
     sheets = wb.sheetnames
     empsheets = [sheet for sheet in sheets if "Emp" in sheet]
@@ -92,15 +93,14 @@ for file in paths:
         r = r + 1
 
     fel = r
+    os.remove(filename)
 
 workbook.close()
 
 t2 = process_time()
 print("ETL Done")
 print("Grand Total for all Files ",t2-t1)
-
-
-
-
-
-
+os.rmdir(r'/opt/Project Data')
+source=r'/opt/Project Data.zip'
+dest=r'/opt/dataout'
+shutil.move(source, dest)
