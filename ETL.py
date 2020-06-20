@@ -8,14 +8,14 @@ from openpyxl.utils import get_column_letter
 from zipfile import ZipFile
 import os, shutil
 
-zf = ZipFile('/opt/Project Data.zip', 'r')
+zf = ZipFile('/opt/Data.zip', 'r')
 zf.extractall('/opt/')
 zf.close()
 
 date = date.today()
 today = date.strftime("%Y%m%d")
 tod = date.strftime("%d/%m/%Y")
-loc = '/home/dinudante/Documents/opt/dataout/'
+loc = '/opt/Dataout/'
 workbook = xlsxwriter.Workbook(loc+'model_' + today + '.xlsx')
 
 worksheet = workbook.add_worksheet()
@@ -37,7 +37,7 @@ worksheet.write('K1', 'Forecast w/o SA  Min')
 t1 = process_time()
 
 paths=[]
-filename = '/opt/Project Data/'
+filename = '/opt/Data/'
 arr = os.listdir(filename)
 for items in arr:
     if "~$" not in items:
@@ -100,7 +100,7 @@ workbook.close()
 t2 = process_time()
 print("ETL Done")
 print("Grand Total for all Files ",t2-t1)
-os.rmdir(r'/opt/Project Data')
-source=r'/opt/Project Data.zip'
-dest=r'/opt/dataout'
+os.rmdir(r'/opt/Data')
+source=r'/opt/Data.zip'
+dest=r'/opt/Dataout'
 shutil.move(source, dest)
